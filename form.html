@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Scheduler</title>
+</head>
+
+<body>
+    <h1>Schedule an Event</h1>
+    <form id="scheduleForm">
+        <label for="event">Event:</label>
+        <input type="text" id="event" name="event" required> <br> <br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required> <br> <br>
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required> <br> <br>
+        <input type="submit" value="Schedule">
+        <div id="message"></div>
+    </form>
+    <script>
+        document.getElementById('scheduleForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formElement = document.getElementById('scheduleForm');
+                const formData = new FormData(formElement);  // Use the form element explicitly
+                fetch('schedule.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('message').innerText = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+    
+    </script>
+</body>
+
+</html>
